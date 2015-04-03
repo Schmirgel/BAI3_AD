@@ -125,61 +125,86 @@ new Morris.Line({
 <h2>
 Aufgabe 2
 </h2>
-Dies ist nur eine Vorlage
+<p>
+Berechnung der nten Fibonacci-Zahl.
+</p>
+<p>
+Beispiel: Bei der Eingabe n = 5, gibt die Funktion die Zahl 5 zurück.
+</p>
 <h2>
-Antwort 2
+Antwort 2.1
 </h2>
 <ol>
 <li>
-TODO
+Implementierung der naiven L&ouml;sung
 </li>
 </ol>
 <h3>
 Implementierung
 </h3>
 <!-- In diesem Element wird der Inhalt des scripts mit der ID ad-1-2-code angezeigt -->
-<pre id="ad-1-2-source"></pre>
+<pre id="ad-1-2-1-source"></pre>
 <h3>
 Testergebnisse
 </h3>
-<div id="ad-1-2-results"></div>
-<!-- Code und Tests hier hin -->
-<script id="ad-1-2-code">
-  var ad_1_2_data = [];
+<div id="ad-1-2-1-results"></div>
 
+<!-- Code und Tests hier hin -->
+<script id="ad-1-2-1-code">
   // Code
 
-  // Experiments
-  for(i = 0; i < 10; i ++) {
-    ad_1_2_data.push({
-      experiment : i,
-      value : new MyClass().value
-      });
+  var timearray = [];
+
+  function fib_time(n) {
+    var start = new Date();
+    var millisekunden_start = start.getTime();
+    var result = fib(n);
+    var ende = new Date();
+    var millisekunden_ende = ende.getTime();
+    return millisekunden_ende - millisekunden_start;
   }
 
+  function fib(n){
+    if           (n < 0)    { return false; }
+    else if      (n == 0)   { return 0; }
+    else if      (n == 1)   { return 1; }
+    else                      return (fib(n-1)+fib(n-2));
+  }
+
+  for (var i = 0; i <= 25; i++) {
+    timearray.push({
+      experiment : i,
+      value : fib_time(i)
+      });
+  };
+
   // Tests
-  assert(ad_1_2_data.length === 10, "experiments have collected data");
-  assert(typeof(steps) === 'function', "function 'steps' not implemented");
+  assert(fib(5) === 5, "Test evaluiert auf true");
+  assert(fib(20) === 6765, "Test evaluiert auf true");
+
+  assert(fib(-5) === -5, "Test evaluiert auf false");
+
 </script>
+
 <!-- dieser Code zeigt die Implementierung und die Tests an -->
 <script>
-$('pre#ad-1-2-source').html($('#ad-1-2-code').html())
+$('pre#ad-1-2-1-source').html($('#ad-1-2-1-code').html())
 </script>
 
 <h3>
 Experimente
 </h3>
 
-<div id="ad-1-2-experiments" style="height: 250px;"></div>
+<div id="ad-1-2-1-experiments" style="height: 250px;"></div>
 <script>
 new Morris.Line({
   // ID of the element in which to draw the chart.
-  element: 'ad-1-2-experiments',
+  element: 'ad-1-2-1-experiments',
   // do values relate to dates (time)?
   parseTime: false,
   // Chart data records -- each entry in this array corresponds to a point on
   // the chart.
-  data: ad_1_2_data,
+  data: timearray,
   // The name of the data record attribute that contains x-values.
   xkey: 'experiment',
   // A list of names of data record attributes that contain y-values.
@@ -188,6 +213,91 @@ new Morris.Line({
   // chart.
   labels: ['Value']
 });
+</script>
+
+<h2>
+Antwort 2.3
+</h2>
+<ol>
+<li>
+Implementierung der memoization L&ouml;sung
+</li>
+</ol>
+<h3> .
+Implementierung
+</h3>
+<!-- In diesem Element wird der Inhalt des scripts mit der ID ad-1-2-code angezeigt -->
+<pre id="ad-1-2-3-source"></pre>
+<h3>
+Testergebnisse
+</h3>
+<div id="ad-1-2-3-results"></div>
+
+<!-- Code und Tests hier hin -->
+<script id="ad-1-2-3-code">
+  var timearray = [];
+  var fiboArray = [];
+  fiboArray[0] = 0;
+  fiboArray[1] = 1;
+  fiboArray[2] = 1;
+
+  function fib_time2(n) {
+    var start = new Date();
+    var millisekunden_start = start.getTime();
+    var result = fib2(n);
+    var ende = new Date();
+    var millisekunden_ende = ende.getTime();
+    return millisekunden_ende - millisekunden_start;
+  }
+
+  function fib2(n){
+    if (n in fiboArray) { return fiboArray[n]};
+    return fiboArray[n] = fib2(n-1) + fib2(n-2);
+  }
+
+  for (var i = 0; i <= 2000; i++) {
+    timearray.push({
+      experiment : i,
+      value : fib_time2(i)
+      });
+  };
+
+  // Tests
+  assert(fib2(77) === 5527939700884757, "Test evaluiert auf true");
+  assert(fib(20) === 6765, "Test evaluiert auf true");
+
+  assert(fib(-5) === -5, "Test evaluiert auf false");
+
+</script>
+
+<!-- dieser Code zeigt die Implementierung und die Tests an -->
+<script>
+$('pre#ad-1-2-3-source').html($('#ad-1-2-3-code').html())
+</script>
+
+<h3>
+Experimente
+</h3>
+
+<div id="ad-1-2-3-experiments" style="height: 250px;"></div>
+<script>
+new Morris.Line({
+  // ID of the element in which to draw the chart.
+  element: 'ad-1-2-3-experiments',
+  // do values relate to dates (time)?
+  parseTime: false,
+  // Chart data records -- each entry in this array corresponds to a point on
+  // the chart.
+  data: timearray,
+  // The name of the data record attribute that contains x-values.
+  xkey: 'experiment',
+  // A list of names of data record attributes that contain y-values.
+  ykeys: ['value'],
+  // Labels for the ykeys -- will be displayed when you hover over the
+  // chart.
+  labels: ['Value']
+});
+
 </script>
 
 </body>
