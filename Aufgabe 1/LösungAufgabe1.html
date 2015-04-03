@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>L&ouml;sungsblatt Vorlage</title>
+        <!-- morris graph lib -->
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+        <!-- LaTeX-style equations -->
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+        </script>
+        <script type="text/javascript"
+                src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+        </script>
+        <!-- tests -->
+        <script>
+            function assert(value, desc) {
+                var li = document.createElement("li");
+                li.style.color = value ? "green" : "red";
+                li.appendChild(document.createTextNode(desc));
+                var list = document.getElementById("results");
+                if (!list) {
+                    list = document.createElement("div");
+                    document.body.appendChild(list);
+                }
+                list.appendChild(li);
+            }
+        </script>
+    </head>
+    <body>
+        <h1 id="title">L&ouml;sung Aufgabe1 <br></br> Ralf Prediger, Torben Fischer</h1>
+
+        L&ouml;sung des ersten Aufgabenblatts.
+
+        <h2>
+            Aufgabe 1
+        </h2>
+        <p>
+
+            Gegeben seien ein Startpunkt $x \in \mathbb{N}$ und ein Zielpunkt $y \in \mathbb{N}$ auf einer Geraden,
+            sowie ein Schrittma&szlig; $d \in \mathbb{N}$. Gesucht ist die Anzahl der Schritte
+            $steps(x, y, d) \in \mathbb{N}$, die ben&ouml;tigt werden, um einen Punkt zu erreichen, dessen Wert
+            gr&ouml;&szlig;er als $y$ ist.
+        </p>
+        <p>
+            Beispiel: Bei der Eingabe $x = 15$, $y = 80$, $d = 30$ sind drei Schritte n&ouml;tig.
+        </p>
+        <ol>
+            <li>
+                Welchen Zeit- und welchen Platzaufwand hat eine naive Implementierung?
+            </li>
+            <li>
+                Implementieren Sie die Methode $steps(x,y,d)$, welche die gesuchte Anzahl der Schritte in Zeitaufwand $O(1)$ und  Platzaufwand $O(1)$ berechnet.
+            </li>
+        </ol>
+        <h2>
+            Antwort 1
+        </h2>
+        <ol>
+            <li>
+                Der Zeit und Platzbedarf $O(1)$
+            </li>
+            <li>
+                TODO
+            </li>
+        </ol>
+        <h3>
+            Implementierung
+        </h3>
+        <!-- In diesem Element wird der Inhalt des scripts mit der ID ad-1-1-results angezeigt -->
+        <pre id="ad-1-1-source"></pre>
+        <h3>
+            Testergebnisse
+        </h3>
+        <div id="ad-1-1-results"></div>
+        <!-- Code und Tests hier hin -->
+        <script id="ad-1-1-code">
+
+            // Code
+            function steps(x,y,d) {
+                if(y < x || d <= 0 || x < 0 || y < 0) {
+                    return false
+                } else {
+                    return Math.ceil((y-x)/d);
+                }
+            }
+
+            // Experiments
+//            for (i = 0; i < 100; i++) {
+//                ad_1_1_data.push({
+//                    experiment: i,
+//                    value: new MyClass().value
+//                });
+//            }
+
+            // Tests
+            assert(steps(15,80,30) === 3, "x=15, y=80, d=30 => 3");
+            assert(steps(10,70,30) === 2, "x=10, y=70, d=30 => 2");
+            assert(steps(0,0,30) === 0, "x=0, y=0, d=30 => 0");
+            assert(steps(0,10,15) === 1, "x=0, y=10, d=15 => 1");
+            
+            assert(steps(80,15,30) === false, "x=80, y=15, d=30 => false");
+            assert(steps(15,80,0) === false, "x=15, y=80, d=0 => false");
+            assert(steps(-15,80,30) === false, "x=-15, y=80, d=30 => false");
+            assert(steps(-15,80,30) === false, "x=15, y=-80, d=30 => false");
+            assert(typeof(steps) === 'function', "function 'steps' not implemented");
+        </script>
+        <!-- dieser Code zeigt die Implementierung und die Tests an -->
+        <script>
+            $('pre#ad-1-1-source').html($('#ad-1-1-code').html())
+        </script>
+
+        <h3>
+            Experimente
+        </h3>
+
+        <div id="ad-1-1-experiments" style="height: 250px;"></div>
+<!--        <script>
+            new Morris.Line({
+                // ID of the element in which to draw the chart.
+                element: 'ad-1-1-experiments',
+                // do values relate to dates (time)?
+                parseTime: false,
+                // Chart data records -- each entry in this array corresponds to a point on
+                // the chart.
+                data: ad_1_1_data,
+                // The name of the data record attribute that contains x-values.
+                xkey: 'experiment',
+                // A list of names of data record attributes that contain y-values.
+                ykeys: ['value'],
+                // Labels for the ykeys -- will be displayed when you hover over the
+                // chart.
+                labels: ['Value']
+            });
+        </script>-->
+
+        <!-- Aufgabe 2 -->
+        <h2>
+            Aufgabe 2
+        </h2>
+            Die Fibonacci-Zahlen. Gegeben sei die folgende Funktion:
+        <h2>
+            Antwort 2
+        </h2>
+        <ol>
+            <li>
+                TODO
+            </li>
+        </ol>
+        <h3>
+            Implementierung1
+        </h3>
+        <!-- In diesem Element wird der Inhalt des scripts mit der ID ad-1-2-code angezeigt -->
+        <pre id="ad-1-2-1-source"></pre>
+        <h3>
+            Testergebnisse
+        </h3>
+        <div id="ad-1-2-1-results"></div>
+        <!-- Code und Tests hier hin -->
+        <script id="ad-1-2-1-code">
+            var ad_1_2_1data = [];
+            
+            function fib_time(n) {
+                var start = new Date().getTime();
+                fib(n);
+                var end = new Date().getTime();
+                var time = end - start;
+                return time;
+            }
+            
+            for(i = 0; i < 25; i ++) {
+            ad_1_2_1data.push({
+              experiment : i,
+              value : fib_time(i)
+              });
+            }
+            
+            function fib(n) {
+                if(n === 0) {
+                    return 0;
+                } else if(n <= 1) {
+                    return 1;
+                } else if(n > 1){
+                    return (fib(n-1) + fib(n-2));
+                }
+            }
+
+            // Tests
+            assert(fib(5) === 5, "5 => 5");
+            assert(fib(0) === 0, "0 => 0");
+            assert(fib(0) === 0, "0 => 0");
+            assert(typeof(fib) === 'function', "function 'steps' not implemented");
+        </script>
+        <!-- dieser Code zeigt die Implementierung und die Tests an -->
+        <script>
+            $('pre#ad-1-2-1-source').html($('#ad-1-2-1-code').html())
+        </script>
+        <h3>
+            Experimente
+        </h3>
+
+        <div id="ad-1-2-experiments" style="height: 250px;"></div>
+        <script>
+            new Morris.Line({
+                // ID of the element in which to draw the chart.
+                element: 'ad-1-2-experiments',
+                // do values relate to dates (time)?
+                parseTime: false,
+                // Chart data records -- each entry in this array corresponds to a point on
+                // the chart.
+                data: ad_1_2_1data,
+                // The name of the data record attribute that contains x-values.
+                xkey: 'experiment',
+                // A list of names of data record attributes that contain y-values.
+                ykeys: ['value'],
+                // Labels for the ykeys -- will be displayed when you hover over the
+                // chart.
+                labels: ['Value']
+            });
+        </script>
+
+        <h3>
+            Implementierung2
+        </h3>
+        <!-- In diesem Element wird der Inhalt des scripts mit der ID ad-1-2-code angezeigt -->
+        <pre id="ad-1-2-2-source"></pre>
+        <h3>
+            Testergebnisse
+        </h3>
+        <div id="ad-1-2-2-results"></div>
+        <!-- Code und Tests hier hin -->
+        <script id="ad-1-2-2-code">
+            var ad_1_2_2data = [];
+            var memo = [];
+            var fiboArray = [];
+            fiboArray[0] = 0;
+            fiboArray[1] = 1;
+            fiboArray[2] = 1;
+            
+            function fib_time2(n) {
+                var start = new Date().getTime();
+                fib2(n);
+                var end = new Date().getTime();
+                var time = end - start;
+                return time;
+            }
+
+            for(i = 0; i < 500; i ++) {
+            ad_1_2_2data.push({
+              experiment : i,
+              value : fib_time2(i)
+              });
+            }
+                        
+            function fib2(n) {
+                if(n in fiboArray) {
+                    return fiboArray[n];
+                } else {
+                    return fiboArray[n] = (fib2(n-1) + fib2(n-2));
+                }
+            }
+                        
+            // Tests
+            assert(fib2(5) === 5, "function 'steps' not implemented");
+            assert(typeof (steps) === 'function', "function 'steps' not implemented");
+        </script>
+        <!-- dieser Code zeigt die Implementierung und die Tests an -->
+        <script>
+            $('pre#ad-1-2-2-source').html($('#ad-1-2-2-code').html())
+        </script>
+        <h3>
+            Experimente
+        </h3>
+
+        <div id="ad-1-2-2-experiments" style="height: 250px;"></div>
+        <script>
+            new Morris.Line({
+                // ID of the element in which to draw the chart.
+                element: 'ad-1-2-2-experiments',
+                // do values relate to dates (time)?
+                parseTime: false,
+                // Chart data records -- each entry in this array corresponds to a point on
+                // the chart.
+                data: ad_1_2_2data,
+                // The name of the data record attribute that contains x-values.
+                xkey: 'experiment',
+                // A list of names of data record attributes that contain y-values.
+                ykeys: ['value'],
+                // Labels for the ykeys -- will be displayed when you hover over the
+                // chart.
+                labels: ['Value']
+            });
+        </script>
+
+    </body>
+</html>
