@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>L&ouml;sungsblatt Vorlage</title>
+<title>L&ouml;sungsblatt Aufgabe 1</title>
 <!-- morris graph lib -->
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
@@ -30,20 +30,7 @@
 </script>
 </head>
 <body>
-<h1 id="title">L&ouml;sungsblatt Vorlage</h1>
-
-Vorlage zur L&ouml;sung des ersten Aufgabenblatts.
-<ul>
-<li>
-Die erste &Uuml;berschrift soll Ihre Namen enthalten.
-</li>
-<li>
-Die Korrektheit Ihrer Implementierung muss durch sinnvolle Tests abgesichert sein.
-</li>
-<li>
-&Uuml;berlegen Sie sich sinnvolle Eingaben und Wiederholungen f&uuml;r die Experimente.
-</li>
-</ul>
+<h1 id="title">L&ouml;sungsblatt Aufgabe 1 <br> Torben Fischer und Ralf Prediger</h1>
 
 <h2>
 Aufgabe 1
@@ -59,9 +46,6 @@ Beispiel: Bei der Eingabe $x = 15$, $y = 80$, $d = 30$ sind drei Schritte n&ouml
 </p>
 <ol>
 <li>
-In Abh&auml;gigkeit von welchem Wert bestimmen Sie Laufzeit und Speicherplatzbedarf?
-</li>
-<li>
 Welchen Zeit- und welchen Platzaufwand hat eine naive Implementierung?
 </li>
 <li>
@@ -73,13 +57,7 @@ Antwort 1
 </h2>
 <ol>
 <li>
-TODO
-</li>
-<li>
-TODO
-</li>
-<li>
-TODO
+Der Zeit- und Platzbedarf ist $0(1)$
 </li>
 </ol>
 <h3>
@@ -93,30 +71,31 @@ Testergebnisse
 <div id="ad-1-1-results"></div>
 <!-- Code und Tests hier hin -->
 <script id="ad-1-1-code">
-  var ad_1_1_data = [];
 
   // Code
-  MyClass = function() {
-    this.value = Math.ceil(Math.random()*100);
-  }
+  function steps(x,y,d) {
+    if (x < 0 || y < 0) { return false; }
+    if (d < 0) { return false; }
+    if(x > y){ return false; }
 
-  // Experiments
-  for(i = 0; i < 100; i ++) {
-    ad_1_1_data.push({
-      experiment : i,
-      value : new MyClass().value
-      });
+    return Math.ceil(((y-x)/d));
   }
 
   // Tests
-  assert(ad_1_1_data.length === 100, "experiments have collected data");
-  assert(typeof(steps) === 'function', "function 'steps' not implemented");
+  assert(steps(10,69,30)  == 2, "Test evaluiert auf true");
+  assert(steps(0,0,15)    == 0, "Test evaluiert auf true");
+  assert(steps(0,10,15)   == 1, "Test evaluiert auf true");
+
+  assert(steps(80,15,30)  == 3, "Test evaluiert auf false");
+  assert(steps(-1,80,30)  == 3, "Test evaluiert auf false");
+  assert(steps(15,-80,30) == 3, "Test evaluiert auf false");
+  assert(steps(15,80,0)   == 3, "Test evaluiert auf false");
 </script>
 <!-- dieser Code zeigt die Implementierung und die Tests an -->
 <script>
 $('pre#ad-1-1-source').html($('#ad-1-1-code').html())
 </script>
-
+<!--
 <h3>
 Experimente
 </h3>
@@ -140,6 +119,7 @@ new Morris.Line({
   labels: ['Value']
 });
 </script>
+-->
 
 <!-- Aufgabe 2 -->
 <h2>
@@ -167,7 +147,7 @@ Testergebnisse
 <script id="ad-1-2-code">
   var ad_1_2_data = [];
 
-  // Code  
+  // Code
 
   // Experiments
   for(i = 0; i < 10; i ++) {
