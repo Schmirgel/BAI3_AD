@@ -96,16 +96,16 @@
 //            }
 
             // Tests
-            assert(steps(15,80,30)  === 3, "x=15, y=80, d=30 => 3");
-            assert(steps(10,70,30)  === 2, "x=10, y=70, d=30 => 2");
-            assert(steps(0,0,30)    === 0, "x=0, y=0, d=30 => 0");
-            assert(steps(0,10,15)   === 1, "x=0, y=10, d=15 => 1");
+            assert(steps(15,80,30) === 3, "x=15, y=80, d=30 => 3");
+            assert(steps(10,70,30) === 2, "x=10, y=70, d=30 => 2");
+            assert(steps(0,0,30) === 0, "x=0, y=0, d=30 => 0");
+            assert(steps(0,10,15) === 1, "x=0, y=10, d=15 => 1");
 
-            assert(steps(80,15,30)  === false, "x=80, y=15, d=30 => false");
-            assert(steps(15,80,0)   === false, "x=15, y=80, d=0 => false");
+            assert(steps(80,15,30) === false, "x=80, y=15, d=30 => false");
+            assert(steps(15,80,0) === false, "x=15, y=80, d=0 => false");
             assert(steps(-15,80,30) === false, "x=-15, y=80, d=30 => false");
             assert(steps(-15,80,30) === false, "x=15, y=-80, d=30 => false");
-            assert(typeof(steps)    === 'function', "function 'steps' not implemented");
+            assert(typeof(steps) === 'function', "function 'steps' not implemented");
         </script>
         <!-- dieser Code zeigt die Implementierung und die Tests an -->
         <script>
@@ -188,17 +188,10 @@
             }
 
             // Tests
-<<<<<<< HEAD
             assert(fib(5) === 5, "5 => 5");
             assert(fib(0) === 0, "0 => 0");
             assert(fib(0) === 0, "0 => 0");
             assert(typeof(fib) === 'function', "function 'fib' not implemented");
-=======
-            assert(fib(5)       === 5, "5 => 5");
-            assert(fib(0)       === 0, "0 => 0");
-            assert(fib(0)       === 0, "0 => 0");
-            assert(typeof(fib)  === 'function', "function 'steps' not implemented");
->>>>>>> 192678f57fc975c875c6c1826075ea6894e12ad4
         </script>
         <!-- dieser Code zeigt die Implementierung und die Tests an -->
         <script>
@@ -254,7 +247,7 @@
                 return time;
             }
 
-            for(i = 0; i < 500; i ++) {
+            for(i = 0; i < 10; i ++) {
             ad_1_2_2data.push({
               experiment : i,
               value : fib_time2(i)
@@ -270,15 +263,10 @@
             }
 
             // Tests
-<<<<<<< HEAD
             assert(fib2(5) === 5, "5 => 5");
             assert(fib2(35) === 9227465, "35 => 9227465");
             assert(fib2(50) === 12586269025, "50 => 12586269025");
             assert(typeof(fib2) === 'function', "function 'fib2' not implemented");
-=======
-            assert(fib2(5)          === 5, "function 'steps' not implemented");
-            assert(typeof (steps)   === 'function', "function 'steps' not implemented");
->>>>>>> 192678f57fc975c875c6c1826075ea6894e12ad4
         </script>
         <!-- dieser Code zeigt die Implementierung und die Tests an -->
         <script>
@@ -329,7 +317,7 @@
                 return time;
             }
 
-            for(i = 0; i < 500; i ++) {
+            for(i = 0; i < 10; i ++) {
             ad_1_2_3data.push({
               experiment : i,
               value : fib_time3(i)
@@ -401,7 +389,7 @@
                 return time;
             }
 
-            for(i = 0; i < 500; i ++) {
+            for(i = 0; i < 10; i ++) {
             ad_1_2_4data.push({
               experiment : i,
               value : fib_time4(i)
@@ -499,24 +487,56 @@
         <div id="ad-1-3-1-results"></div>
         <!-- Code und Tests hier hin -->
         <script id="ad-1-3-1-code">
-            List = function(content) {
-                this.content = content;
-                this.cons = function(x) {
-                    var temp = this.content;
-                    temp.unshift(x);
-                    return temp;
-                };
-                this.first = function() {
-                    var temp = this.content;
-                    return temp[0];
-                };
-            };
-                                    
-            var test = new List([2,3,4]);
+//            List = function(content) {
+//                this.content = content;
+//                this.cons = function(x) {
+//                    var temp = this.content;
+//                    temp.unshift(x);
+//                    return temp;
+//                };
+//                this.first = function() {
+//                    var temp = this.content;
+//                    return temp[0];
+//                };
+//            };
             
-            console.log(test.cons(1));
-            console.log(test.first());
+                                   
+//            var test = new List([2,3,4]);
             
+            
+            function List(){
+                List.create = function() {
+                    return {first:null,rest:null};
+                };
+                
+                this.start = null;
+                this.end   = null;
+                
+                this.cons = function(elem) {
+                    var temp = List.create();
+                    temp.next = this.start; 
+                    this.start = temp; 
+                    temp.first = elem;
+                };
+
+                this.add=function (data){
+                    if(this.start===null){ 
+                      this.start=List.create(); 
+                      this.end=this.start;
+                    }else{ 
+                        this.end.rest=List.create(); 
+                        this.end=this.end.rest; 
+                    };
+                    this.end.first=data; 
+                    
+                };
+            }
+            
+            var list = new List();
+            for(var i = 0; i < 10; i++) {
+                list.cons(i);
+            }
+            console.log(list);
            
             // Tests
 //            assert( === 5, "5 => 5");
