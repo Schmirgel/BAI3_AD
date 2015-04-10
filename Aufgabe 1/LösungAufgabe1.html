@@ -504,11 +504,8 @@
                         this.start = temp; 
                         temp.first = elem;
                     } else {
-                        var temp = List.create();
-                        temp.rest = this.start; 
-                        this.start = temp; 
-                        temp.first = elem;
-                    }                    
+                        this.insert(0,elem);
+                    }               
                 };
 
                 this.add = function (data) {
@@ -534,7 +531,10 @@
                 
                 this.insert = function(t, d) { 
                     if(t === 0) {
-                        this.cons(d);
+                        var temp = List.create();
+                        temp.rest = this.start; 
+                        this.start = temp; 
+                        temp.first = d;
                     } else if(t >= this.length()) {
                         this.insert(this.length()-1, d);
                     } else {
