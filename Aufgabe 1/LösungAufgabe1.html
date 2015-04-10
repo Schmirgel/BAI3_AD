@@ -170,7 +170,7 @@
                 return time;
             }
 
-            for(i = 0; i < 25; i ++) {
+            for(i = 0; i < 35; i ++) {
             ad_1_2_1data.push({
               experiment : i,
               value : fib_time(i)
@@ -247,7 +247,7 @@
                 return time;
             }
 
-            for(i = 0; i < 10; i ++) {
+            for(i = 0; i < 100; i ++) {
             ad_1_2_2data.push({
               experiment : i,
               value : fib_time2(i)
@@ -317,7 +317,7 @@
                 return time;
             }
 
-            for(i = 0; i < 10; i ++) {
+            for(i = 0; i < 100; i ++) {
             ad_1_2_3data.push({
               experiment : i,
               value : fib_time3(i)
@@ -389,7 +389,7 @@
                 return time;
             }
 
-            for(i = 0; i < 10; i ++) {
+            for(i = 0; i < 100; i ++) {
             ad_1_2_4data.push({
               experiment : i,
               value : fib_time4(i)
@@ -486,24 +486,7 @@
         </h3>
         <div id="ad-1-3-1-results"></div>
         <!-- Code und Tests hier hin -->
-        <script id="ad-1-3-1-code">
-//            List = function(content) {
-//                this.content = content;
-//                this.cons = function(x) {
-//                    var temp = this.content;
-//                    temp.unshift(x);
-//                    return temp;
-//                };
-//                this.first = function() {
-//                    var temp = this.content;
-//                    return temp[0];
-//                };
-//            };
-            
-                                   
-//            var test = new List([2,3,4]);
-            
-            
+        <script id="ad-1-3-1-code">           
             function List(){
                 List.create = function() {
                     return {first:null,rest:null};
@@ -513,13 +496,22 @@
                 this.end   = null;
                 
                 this.cons = function(elem) {
-                    var temp = List.create();
-                    temp.next = this.start; 
-                    this.start = temp; 
-                    temp.first = elem;
+                    if(this.start===null) {
+                        this.end = List.create();
+                        this.end.first = elem;
+                        var temp = List.create();
+                        temp.rest = this.start; 
+                        this.start = temp; 
+                        temp.first = elem;
+                    } else {
+                        var temp = List.create();
+                        temp.rest = this.start; 
+                        this.start = temp; 
+                        temp.first = elem;
+                    }                    
                 };
 
-                this.add=function (data){
+                this.add = function (data) {
                     if(this.start===null){ 
                       this.start=List.create(); 
                       this.end=this.start;
@@ -527,17 +519,64 @@
                         this.end.rest=List.create(); 
                         this.end=this.end.rest; 
                     };
-                    this.end.first=data; 
-                    
+                    this.end.first=data;   
                 };
+                
+                this.length = function() {
+                    var length = 0;
+                    var current = this.start;
+                    while (current !== null) {
+                     length = length + 1;
+                     current = current.rest; 
+                    }
+                    return length;
+                }
+                
+                this.insert = function(t, d) { 
+                    if(t === 0) {
+                        this.cons(d);
+                    } else if(t >= this.length()) {
+                        this.insert(this.length()-1, d);
+                    } else {
+                        var current = this.start;
+                        var i = 0;
+                        while (current !== null) {
+                            if (i === t) {
+                                var temp = List.create();
+                                temp.first = d;
+                                temp.rest = current.rest;
+                                if (current == this.end) this.end = temp;
+                                current.rest = temp;
+                                return;
+                            }
+                            i = i + 1;
+                            current = current.rest;
+                        }
+                    }
+                };
+                
+                this.head = function() {
+                    var head = List.create();
+                    head.first = this.start.first;
+                    return head;
+                }
+                
+                this.tail = function() {
+                    var tail = null;
+                    tail = this.start.rest;
+                    return tail;
+                } 
             }
             
             var list = new List();
             for(var i = 0; i < 10; i++) {
                 list.cons(i);
             }
+            list.insert(0,5);
             console.log(list);
-           
+            console.log(list.length());
+            console.log(list.head());
+            console.log(list.tail());
             // Tests
 //            assert( === 5, "5 => 5");
 //            assert(fib(0) === 0, "0 => 0");
