@@ -87,14 +87,6 @@
                 }
             }
 
-            // Experiments
-//            for (i = 0; i < 100; i++) {
-//                ad_1_1_data.push({
-//                    experiment: i,
-//                    value: new MyClass().value
-//                });
-//            }
-
             // Tests
             assert(steps(15,80,30) === 3, "x=15, y=80, d=30 => 3");
             assert(steps(10,70,30) === 2, "x=10, y=70, d=30 => 2");
@@ -111,30 +103,6 @@
         <script>
             $('pre#ad-1-1-source').html($('#ad-1-1-code').html())
         </script>
-
-        <h3>
-            Experimente
-        </h3>
-
-        <div id="ad-1-1-experiments" style="height: 250px;"></div>
-<!--        <script>
-            new Morris.Line({
-                // ID of the element in which to draw the chart.
-                element: 'ad-1-1-experiments',
-                // do values relate to dates (time)?
-                parseTime: false,
-                // Chart data records -- each entry in this array corresponds to a point on
-                // the chart.
-                data: ad_1_1_data,
-                // The name of the data record attribute that contains x-values.
-                xkey: 'experiment',
-                // A list of names of data record attributes that contain y-values.
-                ykeys: ['value'],
-                // Labels for the ykeys -- will be displayed when you hover over the
-                // chart.
-                labels: ['Value']
-            });
-        </script>-->
 
         <!-- Aufgabe 2 -->
         <h2>
@@ -170,7 +138,7 @@
                 return time;
             }
 
-            for(i = 0; i < 35; i ++) {
+            for(var i = 0; i < 35; i ++) {
             ad_1_2_1data.push({
               experiment : i,
               value : fib_time(i)
@@ -247,7 +215,7 @@
                 return time;
             }
 
-            for(i = 0; i < 100; i ++) {
+            for(var i = 0; i < 100; i ++) {
             ad_1_2_2data.push({
               experiment : i,
               value : fib_time2(i)
@@ -317,7 +285,7 @@
                 return time;
             }
 
-            for(i = 0; i < 100; i ++) {
+            for(var i = 0; i < 100; i ++) {
             ad_1_2_3data.push({
               experiment : i,
               value : fib_time3(i)
@@ -389,12 +357,13 @@
                 return time;
             }
 
-            for(i = 0; i < 100; i ++) {
+            for(var i = 0; i < 100; i ++) {
             ad_1_2_4data.push({
               experiment : i,
               value : fib_time4(i)
               });
             }
+            
             function fib4(n) {
                 var a = -1;
                 var b = 1;
@@ -477,7 +446,7 @@
             </li>
         </ol>
         <h3>
-            Implementierung
+            Implementierung List
         </h3>
         <!-- In diesem Element wird der Inhalt des scripts mit der ID ad-1-2-code angezeigt -->
         <pre id="ad-1-3-1-source"></pre>
@@ -486,7 +455,11 @@
         </h3>
         <div id="ad-1-3-1-results"></div>
         <!-- Code und Tests hier hin -->
-        <script id="ad-1-3-1-code">           
+        <script id="ad-1-3-1-code">    
+            var ad_1_3_1data = [];
+            var ad_1_3_2data = [];
+            var ad_1_3_3data = [];
+            
             function List(){
                 List.create = function() {
                     return {first:null,rest:null};
@@ -495,8 +468,23 @@
                 this.start = null;
                 this.end   = null;
                 
+                var counter = 0;
+                
+                this.count = function() {
+                    counter++;
+                }
+                
+                this.countReset = function() {
+                    counter = 0;
+                }
+                
+                this.getCount = function() {
+                    return counter;
+                }
+                
                 this.cons = function(elem) {
                     if(this.start===null) {
+                        this.count();
                         this.end = List.create();
                         this.end.first = elem;
                         var temp = List.create();
@@ -509,10 +497,12 @@
                 };
 
                 this.add = function (data) {
-                    if(this.start===null){ 
-                      this.start=List.create(); 
-                      this.end=this.start;
+                    this.countReset();
+                    if(this.start===null){
+                        this.start=List.create(); 
+                        this.end=this.start;
                     }else{ 
+                        this.count();
                         this.end.rest=List.create(); 
                         this.end=this.end.rest; 
                     };
@@ -523,27 +513,30 @@
                     var length = 0;
                     var current = this.start;
                     while (current !== null) {
-                     length = length + 1;
-                     current = current.rest; 
+                        length = length + 1;
+                        current = current.rest; 
                     }
                     return length;
                 }
                 
-                this.insert = function(t, d) { 
-                    if(t === 0) {
+                this.insert = function(x, n) { 
+                    if(n === 0) {
+                        this.count();
                         var temp = List.create();
                         temp.rest = this.start; 
                         this.start = temp; 
-                        temp.first = d;
-                    } else if(t >= this.length()) {
-                        this.insert(this.length()-1, d);
+                        temp.first = x;
+                    } else if(x >= this.length()) {
+                        this.count();
+                        this.insert(this.length()-1, x);
                     } else {
                         var current = this.start;
                         var i = 0;
                         while (current !== null) {
-                            if (i === t) {
+                            this.count();
+                            if (i === n) {
                                 var temp = List.create();
-                                temp.first = d;
+                                temp.first = x;
                                 temp.rest = current.rest;
                                 if (current == this.end) this.end = temp;
                                 current.rest = temp;
@@ -556,8 +549,7 @@
                 };
                 
                 this.head = function() {
-                    var head = List.create();
-                    head.first = this.start.first;
+                    var head = this.start.first;
                     return head;
                 }
                 
@@ -566,17 +558,68 @@
                     tail = this.start.rest;
                     return tail;
                 } 
+                
+                this.isempty = function() {
+                    return (this.start === null && this.end === null);
+                }
+                
+                this.to_s = function() {
+                    return this.start;
+                }
             }
             
+            function exp1() {
+                var exp1List = new List();
+                for(var i = 0; i < 100; i ++) {                    
+                    exp1List.cons(i);
+                    ad_1_3_1data.push({
+                        experiment : i,
+                        value : exp1List.getCount()
+                    });
+                }
+            }
+            
+            function exp2() {
+                var exp2List = new List();
+                for(var i = 0; i < 100; i ++) {                    
+                    exp2List.add(i);
+                    ad_1_3_2data.push({
+                        experiment : i,
+                        value : exp2List.getCount()
+                    });
+                }
+            }
+            
+            function exp3() {
+                var exp3List = new List();
+                for(var i = 1; i <= 100; i ++) {
+                    var x = (Math.random() * (i-1));
+                    exp3List.insert(x,i);
+                    ad_1_3_3data.push({
+                        experiment : i,
+                        value : exp3List.getCount()
+                    });
+                }
+            }
+            
+            exp1();
+            exp2();
+            exp3();
+
             var list = new List();
+            console.log(list.isempty());
+            
             for(var i = 0; i < 10; i++) {
                 list.cons(i);
             }
-            list.insert(0,5);
+            console.log(list.isempty());
+            list.insert(5,0);
             console.log(list);
             console.log(list.length());
             console.log(list.head());
             console.log(list.tail());
+            console.log(list.to_s());
+            console.log(list.getCount());
             // Tests
 //            assert( === 5, "5 => 5");
 //            assert(fib(0) === 0, "0 => 0");
@@ -588,14 +631,14 @@
             $('pre#ad-1-3-1-source').html($('#ad-1-3-1-code').html())
         </script>
         <h3>
-            Experimente
+            Experiment1 vorne anf&uuml;gen
         </h3>
 
-<!--        <div id="ad-1-3-experiments" style="height: 250px;"></div>
+        <div id="ad-1-3-1-experiments" style="height: 250px;"></div>
         <script>
             new Morris.Line({
                 // ID of the element in which to draw the chart.
-                element: 'ad-1-3-experiments',
+                element: 'ad-1-3-1-experiments',
                 // do values relate to dates (time)?
                 parseTime: false,
                 // Chart data records -- each entry in this array corresponds to a point on
@@ -607,8 +650,251 @@
                 ykeys: ['value'],
                 // Labels for the ykeys -- will be displayed when you hover over the
                 // chart.
-                labels: ['Value']
+                labels: ['Anzahl Schritte']
             });
-        </script>-->
+        </script>
+        <script>
+            $('pre#ad-1-3-1-source').html($('#ad-1-3-1-code').html())
+        </script>
+        <h3>
+            Experiment2 hinten anf&uuml;gen
+        </h3>
+
+        <div id="ad-1-3-2-experiments" style="height: 250px;"></div>
+        <script>
+            new Morris.Line({
+                // ID of the element in which to draw the chart.
+                element: 'ad-1-3-2-experiments',
+                // do values relate to dates (time)?
+                parseTime: false,
+                // Chart data records -- each entry in this array corresponds to a point on
+                // the chart.
+                data: ad_1_3_2data,
+                // The name of the data record attribute that contains x-values.
+                xkey: 'experiment',
+                // A list of names of data record attributes that contain y-values.
+                ykeys: ['value'],
+                // Labels for the ykeys -- will be displayed when you hover over the
+                // chart.
+                labels: ['Anzahl Schritte']
+            });
+        </script>
+        <script>
+            $('pre#ad-1-3-1-source').html($('#ad-1-3-1-code').html())
+        </script>
+        <h3>
+            Experiment3 zuf&auml;llig einf&uuml;gen
+        </h3>
+
+        <div id="ad-1-3-3-experiments" style="height: 250px;"></div>
+        <script>
+            new Morris.Line({
+                // ID of the element in which to draw the chart.
+                element: 'ad-1-3-3-experiments',
+                // do values relate to dates (time)?
+                parseTime: false,
+                // Chart data records -- each entry in this array corresponds to a point on
+                // the chart.
+                data: ad_1_3_3data,
+                // The name of the data record attribute that contains x-values.
+                xkey: 'experiment',
+                // A list of names of data record attributes that contain y-values.
+                ykeys: ['value'],
+                // Labels for the ykeys -- will be displayed when you hover over the
+                // chart.
+                labels: ['Anzahl Schritte']
+            });
+        </script>
+        <h3>
+            Implementierung ArrayList
+        </h3>
+        <!-- In diesem Element wird der Inhalt des scripts mit der ID ad-1-2-code angezeigt -->
+        <pre id="ad-1-3-1-source"></pre>
+        <h3>
+            Testergebnisse
+        </h3>
+        <div id="ad-1-4-1-results"></div>
+        <!-- Code und Tests hier hin -->
+        <script id="ad-1-4-1-code">    
+            var ad_1_4_1data = [];
+            var ad_1_4_2data = [];
+            var ad_1_4_3data = [];
+            
+            function ArrayList(){
+                ArrayList.create = function() {
+                    return [];
+                };
+                
+                this.content = null;
+                var length = 0;                               
+                var counter = 0;
+                
+                this.count = function() {
+                    counter++;
+                }
+                
+                this.countReset = function() {
+                    counter = 0;
+                }
+                
+                this.getCount = function() {
+                    return counter;
+                }
+                
+                this.cons = function(elem) {
+                    if(this.content === null) {
+                        this.content = ArrayList.create();
+                        this.content[0] = elem;
+                        length++;
+                    } else {
+                        this.insert(0,elem);
+                        length++;
+                    }
+                };
+                
+                this.length = function() {
+                    return length;
+                };
+                
+                this.insert = function(x, n) {
+                    var newArray = [];
+                    if(this.content === null) {
+                        this.content = ArrayList.create();
+                        this.content[0] = n;
+                    } else {
+                        if(n > this.length()) {
+                            this.insert(x, this.length()-1);
+                        } else {
+                            for(var i = 0; i <= this.length(); i++){
+                                if(i === n) {
+                                    newArray[i] = x;
+                                    var temp = true;
+                                } else {
+                                    if(temp) {
+                                        newArray[i] = this.content[i-1];
+                                    } else {
+                                        newArray[i] = this.content[i];
+                                    }
+                                }
+                            }
+                            this.content = newArray;
+                        }
+                    }
+                    length++;
+                };
+                
+                this.head = function() {
+                    var head = this.content[0];
+                    return head;
+                }
+                
+                this.tail = function() {
+                    var tail = [];
+                    for(var i = 1; i < this.length(); i++) {
+                        tail[i-1] = this.content[i];
+                    }
+                    return tail;
+                } 
+                
+                this.isempty = function() {
+                    return (this.length() === 0);
+                }
+                
+                this.to_s = function() {
+                    return this.content;
+                }
+            }
+            
+//            function exp1() {
+//                var exp1List = new List();
+//                for(var i = 0; i < 100; i ++) {                    
+//                    exp1List.cons(i);
+//                    ad_1_3_1data.push({
+//                        experiment : i,
+//                        value : exp1List.getCount()
+//                    });
+//                }
+//            }
+//            
+//            function exp2() {
+//                var exp2List = new List();
+//                for(var i = 0; i < 100; i ++) {                    
+//                    exp2List.add(i);
+//                    ad_1_3_2data.push({
+//                        experiment : i,
+//                        value : exp2List.getCount()
+//                    });
+//                }
+//            }
+//            
+//            function exp3() {
+//                var exp3List = new List();
+//                for(var i = 1; i <= 100; i ++) {
+//                    var x = (Math.random() * (i-1));
+//                    exp3List.insert(x,i);
+//                    ad_1_3_3data.push({
+//                        experiment : i,
+//                        value : exp3List.getCount()
+//                    });
+//                }
+//            }
+//            
+//            exp1();
+//            exp2();
+//            exp3();
+
+            var arraylist = new ArrayList();
+            console.log(arraylist.isempty());
+//            console.log(list.isempty());
+            arraylist.cons(1)
+            arraylist.insert(2,1);
+            arraylist.insert(3,0);
+            arraylist.insert(4,2);
+            
+//            for(var i = 0; i < 10; i++) {
+//                arraylist.insert(0,i);
+//            }
+//            console.log(list.isempty());
+//            list.insert(0,5);
+            console.log(arraylist);
+            console.log(arraylist.to_s());
+            console.log(arraylist.length());
+            console.log(arraylist.head());
+            console.log(arraylist.tail());
+            console.log(arraylist.isempty());
+
+            // Tests
+//            assert( === 5, "5 => 5");
+//            assert(fib(0) === 0, "0 => 0");
+//            assert(fib(0) === 0, "0 => 0");
+//            assert(typeof(fib) === 'function', "function 'fib' not implemented");
+        </script>
+        <!-- dieser Code zeigt die Implementierung und die Tests an -->
+        <script>
+            $('pre#ad-1-4-1-source').html($('#ad-1-4-1-code').html())
+        </script>
+        <h3>
+            Experiment1 vorne anf&uuml;gen
+        </h3>
+
+        <div id="ad-1-4-1-experiments" style="height: 250px;"></div>
+        <script>
+            new Morris.Line({
+                // ID of the element in which to draw the chart.
+                element: 'ad-1-4-1-experiments',
+                // do values relate to dates (time)?
+                parseTime: false,
+                // Chart data records -- each entry in this array corresponds to a point on
+                // the chart.
+                data: ad_1_4_1data,
+                // The name of the data record attribute that contains x-values.
+                xkey: 'experiment',
+                // A list of names of data record attributes that contain y-values.
+                ykeys: ['value'],
+                // Labels for the ykeys -- will be displayed when you hover over the
+                // chart.
+                labels: ['Anzahl Schritte']
+            });
+        </script>
     </body>
 </html>
