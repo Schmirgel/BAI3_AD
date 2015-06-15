@@ -79,7 +79,7 @@
             }
 
             var testArray = [];
-            for(var i = 0; i < 100; i ++) {
+            for(var i = 0; i < 1000; i ++) {
                 testArray.push((Math.random() * i) + 1);
                 ad_4_1data.push({
                     experiment : i,
@@ -274,30 +274,26 @@
                 this.key = new Key();
                 this.left = null;
                 this.right = null;
-                this.info = new Info();
                 this.empty = empty;
                 this.insert = insert;
             }
 
-            function insert(key, info) {
+            function insert(key) {
                 if(this.empty()) {
                     this.key.setKey(key);
-                    this.info.setInfo(info);
-                } else if(this.key.compare(key) > 0) {
+                } else if(this.key.compare(key) < 0) {
                     if(this.right == null) {
                         this.right = new Tree();
-                        this.right.insert(key,info);
+                        this.right.insert(key);
                     } else {
-                        this.right.insert(key,info);
+                        this.right.insert(key);
                     }
-                } else if(this.key.compare(key) == 0) {
-                    this.info.setInfo(info);
                 } else {
                     if(this.left == null) {
                         this.left = new Tree();
-                        this.left.insert(key,info);
+                        this.left.insert(key);
                     } else {
-                        this.left.insert(key,info);
+                        this.left.insert(key);
                     }
                 }
             }
@@ -332,66 +328,22 @@
             }
 
             function compare(other_key) {
-                for(i = 0; i < this.key.length; i++) {
-                    if(i > other_key.length) {
-                        return 1;
-                        break;
-                    } else if(this.key.charCodeAt(i) < other_key.charCodeAt(i)) {
-                        return -1;
-                        break;
-                    } else if(this.key.charCodeAt(i) > other_key.charCodeAt(i)) {
-                        return 1;
-                        break;
-                    }
+                if(this.key < other_key) {
+                    return -1;
+                } else if(this.key > other_key) {
+                    return 1;
                 }
                 return 0;
             }
 
-            function Info(info) {
-                this.constructor = Info;
-                this.info = (info!=null) ? new Array(info) : new Array();
-                this.getInfo = getInfo;
-                this.setInfo = setInfo;
-                this.contains = contains;
-                this.toString = infoToString;
-            }
-
-            function getInfo(info) {
-                if(info != null && parseInt(info) != NaN && info < this.info.length) {
-                    return this.info[info];
-                } else {
-                    return this.info;
-                }
-            }
-
-            function setInfo(info) {
-                if(!this.contains(info)) {
-                    this.info[this.info.length] = info;
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-
-            function contains(info) {
-                for(i = 0; i < this.info.length; i++) {
-                    if(this.info[i] == info) {
-                        return true;
-                    }
-                }
-                return false;
-            }
-
-            function infoToString() {
-                return (this.getInfo()).toString();
-            }
-
             var tree = new Tree();
-            tree.insert("b", 1);
-            tree.insert("b", 2);
-            tree.insert("b", 3);
-            tree.insert("a", "test");
-            tree.insert("c", 5.5);
+            tree.insert(4);
+            tree.insert(2);
+            tree.insert(1);
+            tree.insert(3);
+            tree.insert(6);
+            tree.insert(5);
+            tree.insert(7);
 
             console.log(tree);
 
