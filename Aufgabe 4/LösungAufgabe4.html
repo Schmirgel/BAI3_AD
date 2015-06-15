@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>L&ouml;sungsblatt Vorlage</title>
+        <title>L&ouml;sungsblatt Aufgabe 4</title>
         <!-- morris graph lib -->
         <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
@@ -27,162 +27,225 @@
                 }
                 list.appendChild(li);
             }
+
+            function isInt(n){
+                return Number(n)===n && n%1===0;
+            };
+
+            var Preconditions = {
+                checkArgument: function(condition, message) {
+                    if (!condition) {
+                        throw Error('IllegalArgumentException: ' + (message || ''));
+                    }
+                }
+            };
         </script>
     </head>
     <body>
-        <h1 id="title">L&ouml;sung Aufgabe1 <br></br> Ralf Prediger, Torben Fischer</h1>
-
-        L&ouml;sung des ersten Aufgabenblatts.
-
+        <h1 id="title">L&ouml;sung Aufgabe 4 <br></br> Ralf Prediger, Torben Fischer</h1>
         <h2>
-            Aufgabe 1
+            &Uuml;bung Aufgabe 4.1
         </h2>
         <p>
-
-            Gegeben seien ein Startpunkt $x \in \mathbb{N}$ und ein Zielpunkt $y \in \mathbb{N}$ auf einer Geraden,
-            sowie ein Schrittma&szlig; $d \in \mathbb{N}$. Gesucht ist die Anzahl der Schritte
-            $steps(x, y, d) \in \mathbb{N}$, die ben&ouml;tigt werden, um einen Punkt zu erreichen, dessen Wert
-            gr&ouml;&szlig;er als $y$ ist.
+            Summenpaare
+            <br>
+            <br>
+            Gegeben sei eine Sequenz S von ganzen Zahlen und eine ganze Zahl K. <br>
+            Zu berechnen ist die Anzahl der Paare von Elementen (P, Q) aus S f&uuml;r die gilt: P+Q=K <br>
+            Die Implementierung soll in O(|S| log(|S|)) laufen und h&auml;chstens O(|S|) zus&auml;tzlichen Speicher- bedarf haben.
         </p>
         <p>
-            Beispiel: Bei der Eingabe $x = 15$, $y = 80$, $d = 30$ sind drei Schritte n&ouml;tig.
+            Beispiel: Bei der Eingabe $S = [1,2,3,4,4]$, $K = 5$ sind 3 Paare vorhanden.
         </p>
-        <ol>
-            <li>
-                Welchen Zeit- und welchen Platzaufwand hat eine naive Implementierung?
-            </li>
-            <li>
-                Implementieren Sie die Methode $steps(x,y,d)$, welche die gesuchte Anzahl der Schritte in Zeitaufwand $O(1)$ und  Platzaufwand $O(1)$ berechnet.
-            </li>
-        </ol>
-        <h2>
-            Antwort 1
-        </h2>
-        <ol>
-            <li>
-                Der Zeit und Platzbedarf der naiven Implementierung betr&auml;gt $O(1)$.
-            </li>
-        </ol>
         <h3>
             Implementierung
         </h3>
         <!-- In diesem Element wird der Inhalt des scripts mit der ID ad-1-1-results angezeigt -->
-        <pre id="ad-1-1-source"></pre>
+        <pre id="ad-4-1-source"></pre>
         <h3>
             Testergebnisse
         </h3>
-        <div id="ad-1-1-results"></div>
+        <div id="ad-4-1-results"></div>
         <!-- Code und Tests hier hin -->
-        <script id="ad-1-1-code">
+        <script id="ad-4-1-code">
+            var ad_4_1data = [];
 
-            // Code
-            function steps(x,y,d) {
-                if(y < x || d <= 0 || x < 0 || y < 0) {
-                    return false
-                } else {
-                    return Math.ceil((y-x)/d);
-                }
-            }
-
-            // Tests
-            assert(steps(15,80,30) === 3, "x=15, y=80, d=30 => 3");
-            assert(steps(10,70,30) === 2, "x=10, y=70, d=30 => 2");
-            assert(steps(0,0,30) === 0, "x=0, y=0, d=30 => 0");
-            assert(steps(0,10,15) === 1, "x=0, y=10, d=15 => 1");
-
-            assert(steps(80,15,30) === false, "x=80, y=15, d=30 => false");
-            assert(steps(15,80,0) === false, "x=15, y=80, d=0 => false");
-            assert(steps(-15,80,30) === false, "x=-15, y=80, d=30 => false");
-            assert(steps(-15,80,30) === false, "x=15, y=-80, d=30 => false");
-            assert(typeof(steps) === 'function', "function 'steps' not implemented");
-        </script>
-        <!-- dieser Code zeigt die Implementierung und die Tests an -->
-        <script>
-            $('pre#ad-1-1-source').html($('#ad-1-1-code').html())
-        </script>
-
-        <!-- Aufgabe 2 -->
-        <h2>
-            Aufgabe 2
-        </h2>
-            Die Fibonacci-Zahlen:
-        <h2>
-            Antwort 2
-        </h2>
-        <ol>
-            <li>
-                L&ouml;sung zu Aufgabe 2: <br>
-                Der Zeitbedarf der naiven Implementierung betr&auml;gt $O(n&sup2;)$.
-            </li>
-            <li>
-                L&ouml;sung zu Aufgabe 5: <br>
-                Die Implementierung von fib3 hat einen geringeren Platzaufwand, da wir nur 2 Variablen speichern. <br>
-                In der Implementierung von fib2 speichern wir uns alle bisher berechneten Fibonacci-Zahlen in einem Array.
-            </li>
-        </ol>
-        <h3>
-            Implementierung der naiven L&ouml;sung
-        </h3>
-        <!-- In diesem Element wird der Inhalt des scripts mit der ID ad-1-2-code angezeigt -->
-        <pre id="ad-1-2-1-source"></pre>
-        <h3>
-            Testergebnisse
-        </h3>
-        <div id="ad-1-2-1-results"></div>
-        <!-- Code und Tests hier hin -->
-        <script id="ad-1-2-1-code">
-            var ad_1_2_1data = [];
-
-            function fib_time(n) {
+            function summenpaareTime(s,k) {
                 var start = new Date().getTime();
-                fib(n);
+                summenpaare(s,k);
                 var end = new Date().getTime();
                 var time = end - start;
                 return time;
             }
 
-            for(var i = 0; i < 35; i ++) {
-            ad_1_2_1data.push({
-              experiment : i,
-              value : fib_time(i)
-              });
+            var testArray = [];
+            for(var i = 0; i < 100; i ++) {
+                testArray.push((Math.random() * i) + 1);
+                ad_4_1data.push({
+                    experiment : i,
+                    value : summenpaareTime(testArray, 50)
+                });
             }
 
-            function fib(n) {
-                if(n === 0) {
-                    return 0;
-                } else if(n === 1) {
-                    return 1;
-                } else if(n > 1){
-                    return (fib(n-1) + fib(n-2));
+            // Code
+            function summenpaare(s,k) {
+                Preconditions.checkArgument(Array.isArray(s), 'S ist kein Array');
+                Preconditions.checkArgument(isInt(k), 'K ist kein Integer');
+                var counter = 0;
+
+                if(s.length < 2) {
+                    return counter;
                 }
-                return false;
-            }
+                for(i = 0; i < s.length; i++) {
+                    for(j = i; j < s.length; j++) {
+                        if(s[i] + s[j] == k) {
+                            counter++;
+                        }
+                    }
+                }
+                return counter;
+            };
 
             // Tests
-            assert(fib(5) === 5, "5 => 5");
-            assert(fib(0) === 0, "0 => 0");
-            assert(fib(-1) === false, "-1 => false");
-            assert(typeof(fib) === 'function', "function 'fib' not implemented");
+            assert(summenpaare([1,2,3,4,4],5) === 3, "S=[1,2,3,4,4] K=5 => 3");
+            assert(summenpaare([-1,2,3,4,4],5) === 1, "S=[-1,2,3,4,4] K=5 => 1");
+            assert(summenpaare([-1,-2,-3,-4,-4],5) === 0, "S=[-1,-2,-3,-4,-4] K=5 => 0");
+            assert(summenpaare([-1,-2,-3,1,2,3],0) === 3, "S=[-1,-2,-3,1,2,3] K=0 => 3");
+            assert(summenpaare([],5) === 0, "S=[] K=5 => 0");
+            assert(summenpaare([5],5) === 0, "S=[5] K=5 => 0");
+            assert(summenpaare([1,2,3,4,4],0) === 0, "S=[1,2,3,4,4] K=0 => 0");
+
+            assert(typeof(summenpaare) === 'function', "function 'summenpaare' not implemented");
         </script>
         <!-- dieser Code zeigt die Implementierung und die Tests an -->
         <script>
-            $('pre#ad-1-2-1-source').html($('#ad-1-2-1-code').html())
+            $('pre#ad-4-1-source').html($('#ad-4-1-code').html())
         </script>
+
         <h3>
-            Experimente: Zeitaufwand bei der Berechnung der Fibonacci-Zahlen.
+            Experimente: Zeitaufwand bei der Berechnung der Summenpaare.
         </h3>
 
-        <div id="ad-1-2-experiments" style="height: 250px;"></div>
+        <div id="ad-4-1-experiments" style="height: 250px;"></div>
         <script>
             new Morris.Line({
                 // ID of the element in which to draw the chart.
-                element: 'ad-1-2-experiments',
+                element: 'ad-4-1-experiments',
                 // do values relate to dates (time)?
                 parseTime: false,
                 // Chart data records -- each entry in this array corresponds to a point on
                 // the chart.
-                data: ad_1_2_1data,
+                data: ad_4_1data,
+                // The name of the data record attribute that contains x-values.
+                xkey: 'experiment',
+                // A list of names of data record attributes that contain y-values.
+                ykeys: ['value'],
+                // Labels for the ykeys -- will be displayed when you hover over the
+                // chart.
+                labels: ['Ben&ouml;tigte Zeit']
+            });
+        </script>
+
+        <!-- Aufgabe 2 -->
+        <h2>
+            &Uuml;bung Aufgabe 4.1
+        </h2>
+            Mittelpunkte
+            <br>
+            <br>
+            Gegeben sei eine Sequenz S von ganzen Zahlen. Zu berechnen ist ein Index i f&uuml;r den gilt,  <br>
+            dass die Summe der Elemente links gleich der Summe der Elemente rechts von i ist: <h4>$\sum\nolimits_{0 \leq j < i}$ S[j] = $\sum\nolimits_{i < k < |S|}$ S[k]</h4>
+            Der R&uuml;ckgabewert -1 zeigt an, dass es keinen solchen Index gibt. <br>
+            Die Implementierung soll in O(|S|) laufen und h&ouml;chstens O(|S|) zus&auml;tzlichen Speicherbedarf haben.
+        <h3>
+            Implementierung
+        </h3>
+        <!-- In diesem Element wird der Inhalt des scripts mit der ID ad-1-2-code angezeigt -->
+        <pre id="ad-4-2-source"></pre>
+        <h3>
+            Testergebnisse
+        </h3>
+        <div id="ad-4-2-results"></div>
+        <!-- Code und Tests hier hin -->
+        <script id="ad-4-2-code">
+            var ad_4_2data = [];
+
+            function mittelpunkteTime(s) {
+                var start = new Date().getTime();
+                mittelpunkte(s);
+                var end = new Date().getTime();
+                var time = end - start;
+                return time;
+            }
+
+            var testArrayMittelpunkte = [];
+            for(var i = 0; i < 100; i ++) {
+                testArrayMittelpunkte.push((Math.random() * i) + 1);
+                ad_4_2data.push({
+                    experiment : i,
+                    value : mittelpunkteTime(testArrayMittelpunkte)
+                });
+            }
+
+            function mittelpunkte(s) {
+                Preconditions.checkArgument(Array.isArray(s), 'S ist kein Array');
+//                for(i = 0; i < s.length; i++) {
+//                    Preconditions.checkArgument(isInt(s[i]), 'S enth&auml;lt ung&uuml;ltige Werte');
+//                }
+
+                if(s.length < 3) {
+                    return -1;
+                }
+                var left = s[0];
+                var right = 0;
+
+                for(i = 2; i < s.length; i++) {
+                    right += s[i];
+                }
+
+                for(i = 1; i < s.length; i++) {
+                    if(left == right) {
+                        return i;
+                    }
+                    left += s[i];
+                    right -= s[i+1];
+                }
+                return -1;
+            }
+
+            // Tests
+            assert(mittelpunkte([1,2,3,5,3,2,1]) === 3, "S=[1,2,3,5,3,2,1] => 3");
+            assert(mittelpunkte([-1,-2,-3,5,-3,-2,-1]) === 3, "S=[1,2,3,5,3,2,1] => 3");
+            assert(mittelpunkte([-1,-2,-3,5,-6]) === 3, "S=[-1,-2,-3,5,-6] => 3");
+            assert(mittelpunkte([1,1,1]) === 1, "S=[1,1,1] => 1");
+            assert(mittelpunkte([0,0,0,0,0,0,0,0]) === 1, "S=[0,0,0,0,0,0,0,0] => 1");
+
+            assert(mittelpunkte([]) === -1, "S=[] => -1");
+            assert(mittelpunkte([1]) === -1, "S=[1] => -1");
+            assert(mittelpunkte([1,2]) === -1, "S=[1,2] => -1");
+            assert(mittelpunkte([1,2,3,5,5,2,1]) === -1, "S=[1,2,3,5,5,2,1] => -1");
+            assert(mittelpunkte([-1,-2,-3,5,1,2,3]) === -1, "S=[-1,-2,-3,5,1,2,3] => -1");
+
+            assert(typeof(mittelpunkte) === 'function', "function 'mittelpunkte' not implemented");
+        </script>
+        <!-- dieser Code zeigt die Implementierung und die Tests an -->
+        <script>
+            $('pre#ad-4-2-source').html($('#ad-4-2-code').html())
+        </script>
+        <h3>
+            Experimente: Zeitaufwand bei der Berechnung der Mittelpunkte.
+        </h3>
+
+        <div id="ad-4-2-experiments" style="height: 250px;"></div>
+        <script>
+            new Morris.Line({
+                // ID of the element in which to draw the chart.
+                element: 'ad-4-2-experiments',
+                // do values relate to dates (time)?
+                parseTime: false,
+                // Chart data records -- each entry in this array corresponds to a point on
+                // the chart.
+                data: ad_4_2data,
                 // The name of the data record attribute that contains x-values.
                 xkey: 'experiment',
                 // A list of names of data record attributes that contain y-values.
@@ -197,72 +260,167 @@
             Implementierung mit memoization.
         </h3>
         <!-- In diesem Element wird der Inhalt des scripts mit der ID ad-1-2-code angezeigt -->
-        <pre id="ad-1-2-2-source"></pre>
+        <pre id="ad-4-3-source"></pre>
         <h3>
             Testergebnisse
         </h3>
-        <div id="ad-1-2-2-results"></div>
+        <div id="ad-4-3-results"></div>
         <!-- Code und Tests hier hin -->
-        <script id="ad-1-2-2-code">
-            var ad_1_2_2data = [];
-            var memo = [];
-            var fiboArray = [];
-            fiboArray[0] = 0;
-            fiboArray[1] = 1;
-            fiboArray[2] = 1;
+        <script id="ad-4-3-code">
+            var ad_4_3data = [];
 
-            function fib_time2(n) {
-                var start = new Date().getTime();
-                fib2(n);
-                var end = new Date().getTime();
-                var time = end - start;
-                return time;
+            function Tree() {
+                this.constructor = Tree;
+                this.key = new Key();
+                this.left = null;
+                this.right = null;
+                this.info = new Info();
+                this.empty = empty;
+                this.insert = insert;
             }
 
-            for(var i = 0; i < 100; i ++) {
-            ad_1_2_2data.push({
-              experiment : i,
-              value : fib_time2(i)
-              });
-            }
-
-            function fib2(n) {
-                if(n < 0) {
-                    return false;
-                } else {
-                    if(n in fiboArray) {
-                        return fiboArray[n];
+            function insert(key, info) {
+                if(this.empty()) {
+                    this.key.setKey(key);
+                    this.info.setInfo(info);
+                } else if(this.key.compare(key) > 0) {
+                    if(this.right == null) {
+                        this.right = new Tree();
+                        this.right.insert(key,info);
                     } else {
-                        return fiboArray[n] = (fib2(n-1) + fib2(n-2));
+                        this.right.insert(key,info);
+                    }
+                } else if(this.key.compare(key) == 0) {
+                    this.info.setInfo(info);
+                } else {
+                    if(this.left == null) {
+                        this.left = new Tree();
+                        this.left.insert(key,info);
+                    } else {
+                        this.left.insert(key,info);
                     }
                 }
             }
 
+            function empty() {
+              if(this.key.getKey() == null) {
+                  return true;
+              } else {
+                  return false;
+              }
+            }
+
+            function Key(key) {
+                this.constructor = Key;
+                this.key = key;
+                this.getKey = getKey;
+                this.setKey = setKey;
+                this.compare = compare;
+            }
+
+            function getKey() {
+                return this.key;
+            }
+
+            function setKey(key) {
+                if(this.key == null) {
+                    this.key = key;
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            function compare(other_key) {
+                for(i = 0; i < this.key.length; i++) {
+                    if(i > other_key.length) {
+                        return 1;
+                        break;
+                    } else if(this.key.charCodeAt(i) < other_key.charCodeAt(i)) {
+                        return -1;
+                        break;
+                    } else if(this.key.charCodeAt(i) > other_key.charCodeAt(i)) {
+                        return 1;
+                        break;
+                    }
+                }
+                return 0;
+            }
+
+            function Info(info) {
+                this.constructor = Info;
+                this.info = (info!=null) ? new Array(info) : new Array();
+                this.getInfo = getInfo;
+                this.setInfo = setInfo;
+                this.contains = contains;
+                this.toString = infoToString;
+            }
+
+            function getInfo(info) {
+                if(info != null && parseInt(info) != NaN && info < this.info.length) {
+                    return this.info[info];
+                } else {
+                    return this.info;
+                }
+            }
+
+            function setInfo(info) {
+                if(!this.contains(info)) {
+                    this.info[this.info.length] = info;
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            function contains(info) {
+                for(i = 0; i < this.info.length; i++) {
+                    if(this.info[i] == info) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            function infoToString() {
+                return (this.getInfo()).toString();
+            }
+
+            var tree = new Tree();
+            tree.insert("b", 1);
+            tree.insert("b", 2);
+            tree.insert("b", 3);
+            tree.insert("a", "test");
+            tree.insert("c", 5.5);
+
+            console.log(tree);
+
             // Tests
-            assert(fib2(5) === 5, "5 => 5");
-            assert(fib2(0) === 0, "0 => 0");
-            assert(fib2(50) === 12586269025, "50 => 12586269025");
-            assert(fib2(-1) === false, "-1 => false");
-            assert(typeof(fib2) === 'function', "function 'fib2' not implemented");
+//            assert(fib2(5) === 5, "5 => 5");
+//            assert(fib2(0) === 0, "0 => 0");
+//            assert(fib2(50) === 12586269025, "50 => 12586269025");
+//            assert(fib2(-1) === false, "-1 => false");
+
+            assert(typeof(Baum) === 'function', "function 'Baum' not implemented");
         </script>
         <!-- dieser Code zeigt die Implementierung und die Tests an -->
         <script>
-            $('pre#ad-1-2-2-source').html($('#ad-1-2-2-code').html())
+            $('pre#ad-4-3-source').html($('#ad-4-3-code').html())
         </script>
         <h3>
             Experimente: Zeitaufwand bei der Berechnung der Fibonacci-Zahlen.
         </h3>
 
-        <div id="ad-1-2-2-experiments" style="height: 250px;"></div>
+        <div id="ad-4-3-experiments" style="height: 250px;"></div>
         <script>
             new Morris.Line({
                 // ID of the element in which to draw the chart.
-                element: 'ad-1-2-2-experiments',
+                element: 'ad-4-3-experiments',
                 // do values relate to dates (time)?
                 parseTime: false,
                 // Chart data records -- each entry in this array corresponds to a point on
                 // the chart.
-                data: ad_1_2_2data,
+                data: ad_4_3data,
                 // The name of the data record attribute that contains x-values.
                 xkey: 'experiment',
                 // A list of names of data record attributes that contain y-values.
@@ -286,20 +444,21 @@
         <script id="ad-1-2-3-code">
             var ad_1_2_3data = [];
             
-            function fib_time3(n) {
-                var start = new Date().getTime();
-                fib3(n);
-                var end = new Date().getTime();
-                var time = end - start;
-                return time;
-            }
+//            function fib_time3(n) {
+//                var start = new Date().getTime();
+//                fib3(n);
+//                var end = new Date().getTime();
+//                var time = end - start;
+//                return time;
+//            }
+//
+//            for(var i = 0; i < 100; i ++) {
+//            ad_1_2_3data.push({
+//              experiment : i,
+//              value : fib_time3(i)
+//              });
+//            }
 
-            for(var i = 0; i < 100; i ++) {
-            ad_1_2_3data.push({
-              experiment : i,
-              value : fib_time3(i)
-              });
-            }
             function fib3(n) {
                 if(n < 0) {
                     return false;
@@ -363,20 +522,20 @@
         <script id="ad-1-2-4-code">
             var ad_1_2_4data = [];
             
-            function fib_time4(n) {
-                var start = new Date().getTime();
-                fib4(n);
-                var end = new Date().getTime();
-                var time = end - start;
-                return time;
-            }
-
-            for(var i = 0; i < 100; i ++) {
-            ad_1_2_4data.push({
-              experiment : i,
-              value : fib_time4(i)
-              });
-            }
+//            function fib_time4(n) {
+//                var start = new Date().getTime();
+//                fib4(n);
+//                var end = new Date().getTime();
+//                var time = end - start;
+//                return time;
+//            }
+//
+//            for(var i = 0; i < 100; i ++) {
+//            ad_1_2_4data.push({
+//              experiment : i,
+//              value : fib_time4(i)
+//              });
+//            }
             
             function fib4(n) {
                 if(n < 0) {
