@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>L&ouml;sungsblatt Aufgabe 4</title>
+        <!-- morris graph lib -->
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+        <!-- LaTeX-style equations -->
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+        </script>
+        <script type="text/javascript"
+                src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+        </script>
+        <!-- tests -->
+        <script type="text/javascript">
+            function assert(value, desc) {
+                var li = document.createElement("li");
+                li.style.color = value ? "green" : "red";
+                li.appendChild(document.createTextNode(desc));
+                var list = document.getElementById("results");
+                if (!list) {
+                    list = document.createElement("div");
+                    document.body.appendChild(list);
+                }
+                list.appendChild(li);
+            }
+
+            function isInt(n){
+                return Number(n)===n && n%1===0;
+            };
+
+            var Preconditions = {
+                checkArgument: function(condition, message) {
+                    if (!condition) {
+                        throw Error('IllegalArgumentException: ' + (message || ''));
+                    }
+                }
+            };
+
+            var counter = 0;
+
+            function count() {
+                counter++;
+            }
+
+            function resetCounter() {
+                counter = 0;
+            }
+
+            function getCounter() {
+                return counter;
+            }
+        </script>
+    </head>
+    <body>
+        <h1 id="title">L&ouml;sung Aufgabe 4 <br></br> Ralf Prediger, Torben Fischer</h1>
+        <h2>
+            &Uuml;bung Aufgabe 4.1
+        </h2>
+        <p>
+            Summenpaare
+            <br>
+            <br>
+            Gegeben sei eine Sequenz S von ganzen Zahlen und eine ganze Zahl K. <br>
+            Zu berechnen ist die Anzahl der Paare von Elementen (P, Q) aus S f&uuml;r die gilt: P+Q=K <br>
+            Die Implementierung soll in O(|S| log(|S|)) laufen und h&auml;chstens O(|S|) zus&auml;tzlichen Speicher- bedarf haben.
+        </p>
+        <p>
+            Beispiel: Bei der Eingabe $S = [1,2,3,4,4]$, $K = 5$ sind 3 Paare vorhanden.
+        </p>
+        <h3>
+            Implementierung
+        </h3>
+        <!-- In diesem Element wird der Inhalt des scripts mit der ID ad-1-1-results angezeigt -->
+        <pre id="ad-4-1-source"></pre>
+        <h3>
+            Testergebnisse
+        </h3>
+        <div id="ad-4-1-results"></div>
+        <!-- Code und Tests hier hin -->
+        <script id="ad-4-1-code">
+            var ad_4_1data = [];
+            var ad_4_1_1data = [];
+
+            function summenpaareTime(s,k) {
+                var start = new Date().getTime();
+                summenpaare(s,k);
+                var end = new Date().getTime();
+                var time = end - start;
+                return time;
+            }
+
+            var testArray = [];
+            for(var i = 0; i < 100; i ++) {
+                testArray.push((Math.random() * i) + 1);
+                ad_4_1data.push({
+                    experiment : i,
+                    value : summenpaareTime(testArray, 50)
+                });
+                summenpaareSpace(i,getCounter());
+                resetCounter();
+            }
+
+            function summenpaareSpace(i,space) {
+                ad_4_1_1data.push({
+                    experiment : i,
+                    value : space
+                });
+            }
+
+            // Code
+            function summenpaare(s,k) {
+                Preconditions.checkArgument(Array.isArray(s), 'S ist kein Array');
+                Preconditions.checkArgument(isInt(k), 'K ist kein Integer');
+                var counter = 0;
+
+                if(s.length < 2) {
+                    return counter;
+                    count();
+                }
+                for(i = 0; i < s.length; i++) {
+                    for(j = i; j < s.length; j++) {
+                        if(s[i] + s[j] == k) {
+                            count();
+                            counter++;
+                        }
+                        count();
+                    }
+                    count();
+                }
+                return counter;
+            };
+
+
+            // Tests
+            assert(summenpaare([1,2,3,4,4],5) === 3, "S=[1,2,3,4,4] K=5 => 3");
+            assert(summenpaare([-1,2,3,4,4],5) === 1, "S=[-1,2,3,4,4] K=5 => 1");
+            assert(summenpaare([-1,-2,-3,-4,-4],5) === 0, "S=[-1,-2,-3,-4,-4] K=5 => 0");
+            assert(summenpaare([-1,-2,-3,1,2,3],0) === 3, "S=[-1,-2,-3,1,2,3] K=0 => 3");
+            assert(summenpaare([],5) === 0, "S=[] K=5 => 0");
+            assert(summenpaare([5],5) === 0, "S=[5] K=5 => 0");
+            assert(summenpaare([1,2,3,4,4],0) === 0, "S=[1,2,3,4,4] K=0 => 0");
+
+            assert(typeof(summenpaare) === 'function', "function 'summenpaare' not implemented");
+        </script>
+        <!-- dieser Code zeigt die Implementierung und die Tests an -->
+        <script>
+            $('pre#ad-4-1-source').html($('#ad-4-1-code').html())
+        </script>
+
+        <h3>
+            Experimente: Zeitaufwand bei der Berechnung der Summenpaare.
+        </h3>
+
+        <div id="ad-4-1-experiments" style="height: 250px;"></div>
+        <script>
+            new Morris.Line({
+                // ID of the element in which to draw the chart.
+                element: 'ad-4-1-experiments',
+                // do values relate to dates (time)?
+                parseTime: false,
+                // Chart data records -- each entry in this array corresponds to a point on
+                // the chart.
+                data: ad_4_1data,
+                // The name of the data record attribute that contains x-values.
+                xkey: 'experiment',
+                // A list of names of data record attributes that contain y-values.
+                ykeys: ['value'],
+                // Labels for the ykeys -- will be displayed when you hover over the
+                // chart.
+                labels: ['Ben&ouml;tigte Zeit']
+            });
+        </script>
+
+        <h3>
+            Experimente: Platzaufwand bei der Berechnung der Summenpaare.
+        </h3>
+
+        <div id="ad-4-1-1-experiments" style="height: 250px;"></div>
+        <script>
+            new Morris.Line({
+                // ID of the element in which to draw the chart.
+                element: 'ad-4-1-1-experiments',
+                // do values relate to dates (time)?
+                parseTime: false,
+                // Chart data records -- each entry in this array corresponds to a point on
+                // the chart.
+                data: ad_4_1_1data,
+                // The name of the data record attribute that contains x-values.
+                xkey: 'experiment',
+                // A list of names of data record attributes that contain y-values.
+                ykeys: ['value'],
+                // Labels for the ykeys -- will be displayed when you hover over the
+                // chart.
+                labels: ['Ben&ouml;tigter Speicherplatz']
+            });
+        </script>
+
+        <!-- Aufgabe 2 -->
+        <h2>
+            &Uuml;bung Aufgabe 4.2
+        </h2>
+            Mittelpunkte
+            <br>
+            <br>
+            Gegeben sei eine Sequenz S von ganzen Zahlen. Zu berechnen ist ein Index i f&uuml;r den gilt,  <br>
+            dass die Summe der Elemente links gleich der Summe der Elemente rechts von i ist: <h4>$\sum\nolimits_{0 \leq j < i}$ S[j] = $\sum\nolimits_{i < k < |S|}$ S[k]</h4>
+            Der R&uuml;ckgabewert -1 zeigt an, dass es keinen solchen Index gibt. <br>
+            Die Implementierung soll in O(|S|) laufen und h&ouml;chstens O(|S|) zus&auml;tzlichen Speicherbedarf haben.
+        <h3>
+            Implementierung
+        </h3>
+        <!-- In diesem Element wird der Inhalt des scripts mit der ID ad-1-2-code angezeigt -->
+        <pre id="ad-4-2-source"></pre>
+        <h3>
+            Testergebnisse
+        </h3>
+        <div id="ad-4-2-results"></div>
+        <!-- Code und Tests hier hin -->
+        <script id="ad-4-2-code">
+            resetCounter();
+            var ad_4_2data = [];
+            var ad_4_2_1data = [];
+
+            function mittelpunkteTime(s) {
+                var start = new Date().getTime();
+                mittelpunkte(s);
+                var end = new Date().getTime();
+                var time = end - start;
+                return time;
+            }
+
+            var testArrayMittelpunkte = [];
+            for(var i = 0; i < 100; i ++) {
+                testArrayMittelpunkte.push((Math.random() * i) + 1);
+                ad_4_2data.push({
+                    experiment : i,
+                    value : mittelpunkteTime(testArrayMittelpunkte)
+                });
+                mittelpunkteSpace(i,getCounter());
+                resetCounter();
+            }
+
+            function mittelpunkteSpace(i,space) {
+                ad_4_2_1data.push({
+                    experiment : i,
+                    value : space
+                });
+            }
+
+            function mittelpunkte(s) {
+                Preconditions.checkArgument(Array.isArray(s), 'S ist kein Array');
+//                for(i = 0; i < s.length; i++) {
+//                    Preconditions.checkArgument(isInt(s[i]), 'S enth&auml;lt ung&uuml;ltige Werte');
+//                }
+
+                if(s.length < 3) {
+                    count();
+                    return -1;
+                }
+                var left = s[0];
+                count();
+                var right = 0;
+                count();
+
+                for(i = 2; i < s.length; i++) {
+                    count();
+                    right += s[i];
+                }
+
+                for(i = 1; i < s.length; i++) {
+                    if(left == right) {
+                        count();
+                        return i;
+                    }
+                    left += s[i];
+                    count();
+                    right -= s[i+1];
+                    count();
+                }
+                return -1;
+            }
+
+            // Tests
+            assert(mittelpunkte([1,2,3,5,3,2,1]) === 3, "S=[1,2,3,5,3,2,1] => 3");
+            assert(mittelpunkte([-1,-2,-3,5,-3,-2,-1]) === 3, "S=[1,2,3,5,3,2,1] => 3");
+            assert(mittelpunkte([-1,-2,-3,5,-6]) === 3, "S=[-1,-2,-3,5,-6] => 3");
+            assert(mittelpunkte([1,1,1]) === 1, "S=[1,1,1] => 1");
+            assert(mittelpunkte([0,0,0,0,0,0,0,0]) === 1, "S=[0,0,0,0,0,0,0,0] => 1");
+
+            assert(mittelpunkte([]) === -1, "S=[] => -1");
+            assert(mittelpunkte([1]) === -1, "S=[1] => -1");
+            assert(mittelpunkte([1,2]) === -1, "S=[1,2] => -1");
+            assert(mittelpunkte([1,2,3,5,5,2,1]) === -1, "S=[1,2,3,5,5,2,1] => -1");
+            assert(mittelpunkte([-1,-2,-3,5,1,2,3]) === -1, "S=[-1,-2,-3,5,1,2,3] => -1");
+
+            assert(typeof(mittelpunkte) === 'function', "function 'mittelpunkte' not implemented");
+        </script>
+        <!-- dieser Code zeigt die Implementierung und die Tests an -->
+        <script>
+            $('pre#ad-4-2-source').html($('#ad-4-2-code').html())
+        </script>
+        <h3>
+            Experimente: Zeitaufwand bei der Berechnung der Mittelpunkte.
+        </h3>
+
+        <div id="ad-4-2-experiments" style="height: 250px;"></div>
+        <script>
+            new Morris.Line({
+                // ID of the element in which to draw the chart.
+                element: 'ad-4-2-experiments',
+                // do values relate to dates (time)?
+                parseTime: false,
+                // Chart data records -- each entry in this array corresponds to a point on
+                // the chart.
+                data: ad_4_2data,
+                // The name of the data record attribute that contains x-values.
+                xkey: 'experiment',
+                // A list of names of data record attributes that contain y-values.
+                ykeys: ['value'],
+                // Labels for the ykeys -- will be displayed when you hover over the
+                // chart.
+                labels: ['Ben&ouml;tigte Zeit']
+            });
+        </script>
+
+        <h3>
+            Experimente: Platzaufwand bei der Berechnung der Mittelpunkte.
+        </h3>
+
+        <div id="ad-4-2-1-experiments" style="height: 250px;"></div>
+        <script>
+            new Morris.Line({
+                // ID of the element in which to draw the chart.
+                element: 'ad-4-2-1-experiments',
+                // do values relate to dates (time)?
+                parseTime: false,
+                // Chart data records -- each entry in this array corresponds to a point on
+                // the chart.
+                data: ad_4_2_1data,
+                // The name of the data record attribute that contains x-values.
+                xkey: 'experiment',
+                // A list of names of data record attributes that contain y-values.
+                ykeys: ['value'],
+                // Labels for the ykeys -- will be displayed when you hover over the
+                // chart.
+                labels: ['Ben&ouml;tigter Speicherlatz']
+            });
+        </script>
+
+        <!-- Aufgabe 3 -->
+        <h2>
+            &Uuml;bung Aufgabe 4.3
+        </h2>
+        L&auml;ngste Pfade ohne Richtungswechsel
+        <br>
+        <br>
+        Gegeben sei ein bin&auml;rer Baum T = (V, E) und die Funktionen r, l : V $\rightarrow$ V $\cup$ {nil},<br>
+        die zu einem Knoten das jeweils rechte oder linke Kind bestimmen (nil bedeutet, dass der Knoten kein rechtes bzw. linkes Kind hat).<br>
+        Zu berechnen ist die maximale Distanz zwischen den Knoten $v_{0}$, $v_{n}$ f&uuml;r die gilt, <br>
+        dass sie auf einem Pfad von der Wurzel des Baums zu einem Blatt liegen und zus&auml;tzlich gilt <br>
+        <h4>$\forall i : 0 \leq i < n \circ l(v_{i}) in (v_{0},...,v_{n})$ oder $\forall i : 0 \leq i < n \circ r(v_{i}) in (v_{0},...,v_{n})$ </h4>
+        Die Implementierung soll in O(V) laufen und h&ouml;chstens O(V) zus&auml;tzlichen Speicherbedarf haben.
+        <h3>
+            Implementierung
+        </h3>
+        <!-- In diesem Element wird der Inhalt des scripts mit der ID ad-1-2-code angezeigt -->
+        <pre id="ad-4-3-source"></pre>
+        <h3>
+            Testergebnisse
+        </h3>
+        <div id="ad-4-3-results"></div>
+        <!-- Code und Tests hier hin -->
+        <script id="ad-4-3-code">
+            resetCounter();
+            var ad_4_3data = [];
+            var ad_4_3_1data = [];
+
+            function findLongesPathWithoutDirectionChangeTime(tree) {
+                var start = new Date().getTime();
+                tree.findLongesPathWithoutDirectionChange();
+                var end = new Date().getTime();
+                var time = end - start;
+                return time;
+            }
+
+            var testTree = new Tree();
+            for(var i = 0; i < 100; i ++) {
+                testTree.insert((Math.random() * i) + 1);
+                ad_4_3data.push({
+                    experiment : i,
+                    value : findLongesPathWithoutDirectionChangeTime(testTree)
+                });
+                findLongesPathWithoutDirectionChangeSpace(i,getCounter());
+                resetCounter();
+            }
+
+            function findLongesPathWithoutDirectionChangeSpace(i,space) {
+                ad_4_3_1data.push({
+                    experiment : i,
+                    value : space
+                });
+            }
+
+            function Tree() {
+                this.constructor = Tree;
+                this.key = new Key();
+                this.left = null;
+                this.right = null;
+                this.empty = empty;
+                this.insert = insert;
+                this.findLongesPathWithoutDirectionChange = findLongesPathWithoutDirectionChange;
+            }
+
+            function insert(key) {
+                if(this.empty()) {
+                    this.key.setKey(key);
+                } else if(this.key.compare(key) < 0) {
+                    if(this.right == null) {
+                        this.right = new Tree();
+                        this.right.insert(key);
+                    } else {
+                        this.right.insert(key);
+                    }
+                } else {
+                    if(this.left == null) {
+                        this.left = new Tree();
+                        this.left.insert(key);
+                    } else {
+                        this.left.insert(key);
+                    }
+                }
+            }
+
+            function findLongesPathWithoutDirectionChange() {
+                var leftLeaf = this.left;               count();
+                var rightLeaf = this.right;             count();
+                var rightPath = [];                     count();
+                rightPath.push(this.key.getKey());      count();
+                var leftPath = [];                      count();
+                leftPath.push(this.key.getKey());       count();
+                while(leftLeaf != null || rightLeaf != null) {
+                    if(leftLeaf != null) {
+                        leftPath.push(leftLeaf.key.getKey());   count();
+                        leftLeaf = leftLeaf.left;               count();
+                    }
+                    if(rightLeaf != null) {
+                        rightPath.push(rightLeaf.key.getKey()); count();
+                        rightLeaf = rightLeaf.right;            count();
+                    }
+                }
+                if(rightPath.length < leftPath.length) {
+                    count();
+                    return leftPath;
+                } else {
+                    count();
+                    return rightPath;
+                }
+            }
+
+            function empty() {
+              if(this.key.getKey() == null) {
+                  return true;
+              } else {
+                  return false;
+              }
+            }
+
+            function Key(key) {
+                this.constructor = Key;
+                this.key = key;
+                this.getKey = getKey;
+                this.setKey = setKey;
+                this.compare = compare;
+            }
+
+            function getKey() {
+                return this.key;
+            }
+
+            function setKey(key) {
+                if(this.key == null) {
+                    this.key = key;
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            function compare(other_key) {
+                if (this.key < other_key) {
+                    return -1;
+                } else if (this.key > other_key) {
+                    return 1;
+                }
+                return 0;
+            }
+
+//            var tree = new Tree();
+//            tree.insert(10);
+//            tree.insert(6);
+//            tree.insert(3);
+//            tree.insert(8);
+//            tree.insert(2);
+//            tree.insert(5);
+//            tree.insert(7);
+//            tree.insert(9);
+//            tree.insert(14);
+//            tree.insert(12);
+//            tree.insert(15);
+//            tree.insert(13);
+//            tree.insert(16);
+//            tree.insert(17);
+
+            // Tests
+            var testTree = new Tree();
+            testTree.insert(10);
+            testTree.insert(9);
+            testTree.insert(11);
+            testTree.insert(12);
+
+            assert(testTree.key.getKey() === 10, "Tree[10,null,null].key => 10");
+            assert(testTree.left.key.getKey() === 9, "Tree[10,Tree[9,null,null],null].left.key => 9");
+            assert(testTree.right.key.getKey() === 11, "Tree[10,Tree[9,null,null],Tree[11,null,null]].right.key => 11");
+            assert(testTree.right.right.key.getKey() === 12, "Tree[10,Tree[9,null,null],Tree[11,null,Tree[12,null,null]]].right.right.key => 12");
+            assert(JSON.stringify(testTree.findLongesPathWithoutDirectionChange()) === JSON.stringify([10,11,12]), "Tree[10,Tree[9,null,null],Tree[11,null,Tree[12,null,null]]].findLongesPathWithoutDirectionChange => [10,11,12]");
+            testTree.insert(8);
+            assert(testTree.left.left.key.getKey() === 8, "Tree[10,Tree[9,Tree[8,null,null],null],Tree[11,null,Tree[12,null,null]]].left.left.key => 8");
+            testTree.insert(7);
+            assert(testTree.left.left.left.key.getKey() === 7, "Tree[10,Tree[9,Tree[8,Tree[7,null,null],null],null],Tree[11,null,Tree[12,null,null]]].left.left.left.key => 7");
+            assert(JSON.stringify(testTree.findLongesPathWithoutDirectionChange()) === JSON.stringify([10,9,8,7]), "Tree[10,Tree[9,Tree[8,Tree[7,null,null],null],null],Tree[11,null,Tree[12,null,null]]].findLongesPathWithoutDirectionChange => [10,9,8,7]");
+
+            assert(typeof(Tree) === 'function', "function 'Tree' not implemented");
+        </script>
+        <!-- dieser Code zeigt die Implementierung und die Tests an -->
+        <script>
+            $('pre#ad-4-3-source').html($('#ad-4-3-code').html())
+        </script>
+        <h3>
+            Experimente: Zeitaufwand zur findung des L&auml;ngsten Pfades ohne Richtungswechsel
+        </h3>
+
+        <div id="ad-4-3-experiments" style="height: 250px;"></div>
+        <script>
+            new Morris.Line({
+                // ID of the element in which to draw the chart.
+                element: 'ad-4-3-experiments',
+                // do values relate to dates (time)?
+                parseTime: false,
+                // Chart data records -- each entry in this array corresponds to a point on
+                // the chart.
+                data: ad_4_3data,
+                // The name of the data record attribute that contains x-values.
+                xkey: 'experiment',
+                // A list of names of data record attributes that contain y-values.
+                ykeys: ['value'],
+                // Labels for the ykeys -- will be displayed when you hover over the
+                // chart.
+                labels: ['Ben&ouml;tigte Zeit']
+            });
+        </script>
+
+        <h3>
+            Experimente: Platzaufwand zur findung des L&auml;ngsten Pfades ohne Richtungswechsel
+        </h3>
+
+        <div id="ad-4-3-1-experiments" style="height: 250px;"></div>
+        <script>
+            new Morris.Line({
+                // ID of the element in which to draw the chart.
+                element: 'ad-4-3-1-experiments',
+                // do values relate to dates (time)?
+                parseTime: false,
+                // Chart data records -- each entry in this array corresponds to a point on
+                // the chart.
+                data: ad_4_3_1data,
+                // The name of the data record attribute that contains x-values.
+                xkey: 'experiment',
+                // A list of names of data record attributes that contain y-values.
+                ykeys: ['value'],
+                // Labels for the ykeys -- will be displayed when you hover over the
+                // chart.
+                labels: ['Ben&ouml;tigte Speicherplatz']
+            });
+        </script>
+        
+        <!-- Aufgabe 4 -->
+        <h2>
+            &Uuml;bung Aufgabe 4.4
+        </h2>
+
+			L&auml;ngste Pfade mit aufsteigenden Gewicht.<br>
+			Zu berechnen ist die Lange n des l&auml;ngsten Pfades ($v_{0},..,v_{n}$) eines gerichten Graphen G = (V,E) mit <br>
+			mit Gewichtsfunktion $w: E \rightarrow \mathbb{R}$ f&uuml;r den gilt , dass die Kantengewichte streng monoton zunehmen: <br>
+			$\forall i : 0 < i < n \bullet w(v_{i-1}, v_{i}) < w(v_{1}, v_{i+1})$
+        <!-- In diesem Element wird der Inhalt des scripts mit der ID ad-4-4-code angezeigt -->
+        <pre id="ad-4-4-source"></pre>
+        <h3>
+            Testergebnisse
+        </h3>
+        <div id="ad-4-4results"></div>
+        <!-- Code und Tests hier hin -->
+        <script id="ad-4-4code">    
+            var ad_4_4data = [];
+            
+            var edgesArray = new Array();
+
+            function Graph(){
+                this.constructor = Graph;
+                this.create = create;
+                this.value = [];
+                this.empty = empty;
+                this.findLongestPath = findLongestPath;
+                this.sortedEdges = sortedEdges;
+            }
+            
+            function create(vertex, edges){
+                var vertexArray = new Array([vertex]);
+                for(var i = 0; i < vertex; i++){
+                    vertexArray[i] = i;
+                }
+
+                for(var i = 0; i < edges; i++){
+                    var kanten = new Array([3]);
+                    var u = Math.floor(Math.random()*edges);
+                    var v = Math.floor(Math.random()*edges);
+                    var wertung = Math.floor(Math.random()* 10 +1);
+                    
+                    kanten[0] = u;
+                    kanten[1] = v;
+                    kanten[2] = wertung;
+
+                    this.value.push(kanten);
+                }
+                
+            }
+            
+            function empty(){
+                if(edgesArray.length == 0){
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            
+            function sortedEdges() {
+                for(var i = 0; i < edgesArray; i++){
+                    var max = Max(edgesArray, i);
+                    var temp = edgesArray[i];
+                    edgesArray[i] = max.wert;
+                    edgesArray[max.index] = temp;
+                }
+            }
+            
+            var max = function(list, n){
+                var maxValue = list[0];
+                var maxIndex = 0;
+                for(var i = n; i < list.length; i++){
+                    if(maxValue < list[i]) {
+                        maxValue = list[i];
+                        maxIndex = i;
+                    }
+                }
+                return{
+                    wert: maxValue,
+                    index: maxIndex
+                }
+            }
+            
+            function findLongestPath(){
+                if(this.empty){
+                    return 0;
+                }
+                var edgesList = this.sortedEdges();
+                
+            }
+
+            function selectionSort (array) {
+                var i, j, tmp, tmp2;
+                for(i = 0; i < array.length - 1; i++) {
+                    tmp = i;
+                    for(j = i + 1; j < array.length; j++) {
+                        if(array[j][2] > array[tmp][2]) {
+                            tmp = j;
+                        }
+                    }
+                    if(tmp != i) {
+                        tmp2 = array[tmp];
+                        array[tmp] = array[i];
+                        array[i] = tmp2;
+                    }
+                }
+            }
+
+            var graph = new Graph();
+            graph.create(5,5);
+            console.log(graph);
+            selectionSort(graph.value);
+            console.log(graph);
+            // Tests
+//            assert(list.head() === 9, "{9,8,7,6,5,4,3,2,1,0}.head() => 9");
+//            list.cons(10);
+//            assert(list.head() === 10, "{10,9,8,7,6,5,4,3,2,1,0}.cons(10).head() => 10");
+//            list.insert(11,8);
+//            assert(list.length() === 12, "{10,9,8,7,6,5,4,11,3,2,1,0}.insert(11,8).length() => 12");
+//            assert(list.tail().length() === 11, "{10,9,8,7,6,5,4,11,3,2,1,0}.tail().length() => 11");
+//            assert(list.isempty() === false, "{10,9,8,7,6,5,4,11,3,2,1,0}.isempty() => false");
+//            var emptyList = new List();
+//            assert(emptyList.isempty(), "{}.isempty() => true");
+            assert(typeof(Graph) === 'function', "Class 'Graph' not implemented");
+        </script>
+        <!-- dieser Code zeigt die Implementierung und die Tests an -->
+        <script>
+            $('pre#ad-4-4-source').html($('#ad-4-4-code').html())
+        </script>
+        <h3>
+            Experiment Liste: Zugriffe auf die Liste f&uuml;r das anf&uuml;gen am Anfang der Liste.
+        </h3>
+
+        <div id="ad-4-4-experiments" style="height: 250px;"></div>
+        <script>
+            new Morris.Line({
+                // ID of the element in which to draw the chart.
+                element: 'ad-4-4-experiments',
+                // do values relate to dates (time)?
+                parseTime: false,
+                // Chart data records -- each entry in this array corresponds to a point on
+                // the chart.
+                data: ad_4_4data,
+                // The name of the data record attribute that contains x-values.
+                xkey: 'experiment',
+                // A list of names of data record attributes that contain y-values.
+                ykeys: ['value'],
+                // Labels for the ykeys -- will be displayed when you hover over the
+                // chart.
+                labels: ['Zugriffe']
+            });
+        </script>
+        <script>
+            $('pre#ad-4-4-source').html($('#ad-4-4-code').html())
+        </script>      
+    </body>
+</html>
